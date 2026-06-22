@@ -2,25 +2,39 @@ import TodoItem from "./TodoItem";
 
 import "../styles/TodoList.css";
 
-function TodoList({ tasks, deleteTask }) {
+function TodoList({
 
-  return (
+tasks,
 
-    <div className="todo-list">
+deleteTask,
 
-      {tasks.map((task) => (
+toggleComplete
 
-        <TodoItem
-          key={task.id}
-          task={task}
-          deleteTask={deleteTask}
-        />
+}) {
 
-      ))}
+return (
 
-    </div>
+<div className="todo-list">
 
-  );
+{tasks.map((task)=>(
+
+<TodoItem
+
+key={task.id}
+
+task={task}
+
+deleteTask={deleteTask}
+
+toggleComplete={toggleComplete}
+
+/>
+
+))}
+
+</div>
+
+);
 
 }
 

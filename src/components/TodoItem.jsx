@@ -1,22 +1,76 @@
 import "../styles/TodoItem.css";
 
-function TodoItem({ task, deleteTask }) {
+function TodoItem({
 
-  return (
+task,
 
-    <div className="todo-item">
+deleteTask,
 
-      <p>{task.text}</p>
+toggleComplete
 
-      <button
-        onClick={() => deleteTask(task.id)}
-      >
-        Delete
-      </button>
+}) {
 
-    </div>
+return (
 
-  );
+<div className="todo-item">
+
+<div className="task-left">
+
+<input
+
+type="checkbox"
+
+checked={task.completed}
+
+onChange={()=>
+
+toggleComplete(task.id)
+
+}
+
+/>
+
+<p
+
+className={
+
+task.completed
+
+?
+
+"completed"
+
+:
+
+""
+
+}
+
+>
+
+{task.text}
+
+</p>
+
+</div>
+
+<button
+
+onClick={()=>
+
+deleteTask(task.id)
+
+}
+
+>
+
+Delete
+
+</button>
+
+</div>
+
+);
 
 }
 

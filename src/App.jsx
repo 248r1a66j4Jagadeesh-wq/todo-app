@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./styles/App.css";
 
@@ -10,8 +10,14 @@ import EmptyState from "./components/EmptyState";
 
 function App() {
 
-  const [tasks, setTasks] = useState([]);
+ const [tasks, setTasks] = useState(() => {
 
+  const savedTasks = localStorage.getItem("tasks");
+
+  return savedTasks ? JSON.parse(savedTasks) : [];
+
+});
+  // Add Task
   function addTask(taskText) {
 
     if (taskText.trim() === "") return;
@@ -19,23 +25,51 @@ function App() {
     const newTask = {
       id: Date.now(),
       text: taskText,
-      completed: false
+      completed: false,
     };
-function deleteTask(id) {
 
-  const updatedTasks = tasks.filter((task) => {
-
-    return task.id !== id;
-
-  });
-
-  setTasks(updatedTasks);
-
-}
     setTasks([...tasks, newTask]);
-
   }
 
+  // Delete Task
+  function deleteTask(id) {
+
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+
+    setTasks(updatedTasks);
+  }
+
+  // Toggle Complete
+  function toggleComplete(id) {
+
+    const updatedTasks = tasks.map((task) => {
+
+      if (task.id === id) {
+
+        return {
+          ...task,
+          completed: !task.completed,
+        };
+
+      }
+
+      return task;
+
+    });
+
+    setTasks(updatedTasks);
+  }
+useEffect(() => {
+
+  localStorage.setItem(
+
+    "tasks",
+
+    JSON.stringify(tasks)
+
+  );
+
+}, [tasks]);
   return (
     <div className="app">
 
@@ -47,12 +81,18 @@ function deleteTask(id) {
         <EmptyState />
       ) : (
         <TodoList
-    tasks={tasks}
-    deleteTask={deleteTask}
-/>
+          tasks={tasks}
+          deleteTask={deleteTask}
+          toggleComplete={toggleComplete}
+        />
       )}
 
-      <Footer totalTasks={tasks.length} />
+      <Footer
+        totalTasks={tasks.length}
+        completedTasks={
+          tasks.filter((task) => task.completed).length
+        }
+      />
 
     </div>
   );
