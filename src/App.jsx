@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import "./styles/App.css";
 
 import Header from "./components/Header";
@@ -7,17 +9,38 @@ import Footer from "./components/Footer";
 import EmptyState from "./components/EmptyState";
 
 function App() {
+
+  const [tasks, setTasks] = useState([]);
+
+  function addTask(taskText) {
+
+    if (taskText.trim() === "") return;
+
+    const newTask = {
+      id: Date.now(),
+      text: taskText,
+      completed: false
+    };
+
+    setTasks([...tasks, newTask]);
+
+  }
+
   return (
     <div className="app">
+
       <Header />
 
-      <TodoForm />
+      <TodoForm addTask={addTask} />
 
-      <EmptyState />
-
-      <TodoList />
+      {tasks.length === 0 ? (
+        <EmptyState />
+      ) : (
+        <TodoList tasks={tasks} />
+      )}
 
       <Footer />
+
     </div>
   );
 }
