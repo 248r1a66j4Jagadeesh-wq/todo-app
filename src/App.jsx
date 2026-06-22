@@ -10,13 +10,20 @@ import EmptyState from "./components/EmptyState";
 
 function App() {
 
- const [tasks, setTasks] = useState(() => {
+  // Load tasks from Local Storage
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
 
-  const savedTasks = localStorage.getItem("tasks");
+  // Search State
+  const [searchTerm, setSearchTerm] = useState("");
 
-  return savedTasks ? JSON.parse(savedTasks) : [];
+  // Save tasks to Local Storage
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
-});
   // Add Task
   function addTask(taskText) {
 
@@ -34,23 +41,23 @@ function App() {
   // Delete Task
   function deleteTask(id) {
 
-    const updatedTasks = tasks.filter((task) => task.id !== id);
+    const updatedTasks = tasks.filter(
+      (task) => task.id !== id
+    );
 
     setTasks(updatedTasks);
   }
 
-  // Toggle Complete
+  // Complete Task
   function toggleComplete(id) {
 
     const updatedTasks = tasks.map((task) => {
 
       if (task.id === id) {
-
         return {
           ...task,
           completed: !task.completed,
         };
-
       }
 
       return task;
@@ -59,33 +66,56 @@ function App() {
 
     setTasks(updatedTasks);
   }
-useEffect(() => {
 
-  localStorage.setItem(
+  // Clear Completed Tasks
+  function clearCompleted() {
 
-    "tasks",
+    const activeTasks = tasks.filter(
+      (task) => !task.completed
+    );
 
-    JSON.stringify(tasks)
+    setTasks(activeTasks);
+  }
 
+  // Search Filter
+  const filteredTasks = tasks.filter((task) =>
+    task.text.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-}, [tasks]);
   return (
+
     <div className="app">
 
       <Header />
 
+      <input
+        type="text"
+        placeholder="Search tasks..."
+        value={searchTerm}
+        onChange={(e) =>
+          setSearchTerm(e.target.value)
+        }
+        className="search-input"
+      />
+
       <TodoForm addTask={addTask} />
 
-      {tasks.length === 0 ? (
+      {filteredTasks.length === 0 ? (
         <EmptyState />
       ) : (
         <TodoList
-          tasks={tasks}
+          tasks={filteredTasks}
           deleteTask={deleteTask}
           toggleComplete={toggleComplete}
         />
       )}
+
+      <button
+        className="clear-btn"
+        onClick={clearCompleted}
+      >
+        Clear Completed
+      </button>
 
       <Footer
         totalTasks={tasks.length}
@@ -95,7 +125,9 @@ useEffect(() => {
       />
 
     </div>
+
   );
+
 }
 
 export default App;

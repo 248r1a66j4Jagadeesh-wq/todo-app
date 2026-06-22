@@ -14,3 +14,30 @@ body {
   margin: 40px auto;
   padding: 20px;
 }
+.search-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  font-size: 16px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+.clear-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  background: #f59e0b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.clear-btn:hover {
+  background: #d97706;
+}

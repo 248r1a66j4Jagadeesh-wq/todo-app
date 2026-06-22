@@ -2,31 +2,35 @@ import "../styles/Footer.css";
 
 function Footer({
 
-totalTasks,
+  totalTasks,
 
-completedTasks
+  completedTasks
 
 }) {
 
-return (
+  return (
 
-<footer className="footer">
+    <footer className="footer">
 
-<p>
+      <p>Total Tasks : {totalTasks}</p>
 
-Total Tasks : {totalTasks}
+      <p>Completed : {completedTasks}</p>
 
-</p>
+      <p>
 
-<p>
+        Progress :
 
-Completed : {completedTasks}
+        {completedTasks}
 
-</p>
+        /
 
-</footer>
+        {totalTasks}
 
-);
+      </p>
+
+    </footer>
+
+  );
 
 }
 

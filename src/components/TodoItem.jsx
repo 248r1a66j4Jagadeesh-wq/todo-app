@@ -55,12 +55,15 @@ task.completed
 </div>
 
 <button
+onClick={() => {
 
-onClick={()=>
+  if (window.confirm("Delete this task?")) {
 
-deleteTask(task.id)
+    deleteTask(task.id);
 
-}
+  }
+
+}}
 
 >
 
