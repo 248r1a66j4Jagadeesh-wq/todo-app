@@ -2,17 +2,20 @@ import TodoItem from "./TodoItem";
 
 import "../styles/TodoList.css";
 
-function TodoList({ tasks }) {
+function TodoList({ tasks, deleteTask }) {
 
   return (
 
     <div className="todo-list">
 
-      {tasks.map((task)=>(
+      {tasks.map((task) => (
+
         <TodoItem
           key={task.id}
           task={task}
+          deleteTask={deleteTask}
         />
+
       ))}
 
     </div>

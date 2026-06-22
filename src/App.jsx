@@ -21,7 +21,17 @@ function App() {
       text: taskText,
       completed: false
     };
+function deleteTask(id) {
 
+  const updatedTasks = tasks.filter((task) => {
+
+    return task.id !== id;
+
+  });
+
+  setTasks(updatedTasks);
+
+}
     setTasks([...tasks, newTask]);
 
   }
@@ -36,10 +46,13 @@ function App() {
       {tasks.length === 0 ? (
         <EmptyState />
       ) : (
-        <TodoList tasks={tasks} />
+        <TodoList
+    tasks={tasks}
+    deleteTask={deleteTask}
+/>
       )}
 
-      <Footer />
+      <Footer totalTasks={tasks.length} />
 
     </div>
   );
