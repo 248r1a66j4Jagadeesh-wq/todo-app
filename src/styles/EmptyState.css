@@ -1,0 +1,9 @@
+.empty-state {
+  text-align: center;
+  color: #777;
+  padding: 30px;
+}
+
+.empty-state h2 {
+  margin-bottom: 10px;
+}
