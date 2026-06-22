@@ -1,7 +1,7 @@
 function App() {
   return (
     <>
-      <h1>React To-Do App</h1>
+      <h1>My ToDo Application</h1>
     </>
   );
 }
